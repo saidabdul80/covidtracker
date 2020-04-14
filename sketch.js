@@ -1,26 +1,30 @@
 var danger =[
 //correct
-	{"lat": 9.616972, "long":6.533667, "name": "limawaA"}
+	{"lat": 9.616966, "long":6.533678, "name": "limawaA"},
+	{"lat": 9.016966, "long":6.533678, "name":"limawaB"},
+	{"lat": 9.086966, "long":10.373678, "name":"limawaC"}
 	]
 
-function distance(latitude1,longitude1,latitude2,longitude2,units) {
-  var earthRadius = 6371; // Radius of the earth in km
-  var dLat = deg2rad(latitude2-latitude1);  // deg2rad below
-  var dLon = deg2rad(longitude2-longitude1); 
-  var a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(deg2rad(latitude1)) * Math.cos(deg2rad(latitude2)) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2)
-    ; 
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  var d = earthRadius * c; 
-  var miles = d / 1.609344; 
-
-if ( units == 'km' ) {  
-return d*1000; 
- } else {
-return miles; 
-}
+function distance(lat1, lon1, lat2, lon2, unit) {
+	if ((lat1 == lat2) && (lon1 == lon2)) {
+		return 0;
+	}
+	else {
+		var radlat1 = Math.PI * lat1/180;
+		var radlat2 = Math.PI * lat2/180;
+		var theta = lon1-lon2;
+		var radtheta = Math.PI * theta/180;
+		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+		if (dist > 1) {
+			dist = 1;
+		}
+		dist = Math.acos(dist);
+		dist = dist * 180/Math.PI;
+		dist = dist * 60 * 1.1515;
+		if (unit=="K") { dist = dist * 1.609344 }
+		if (unit=="N") { dist = dist * 0.8684 }
+		return dist;
+	}
 }
 
 
@@ -47,12 +51,12 @@ return miles;
             var prevLong = position.coords.longitude;
             var data = [];
             var diff=0;
-           	//diff = distance(prevLat,prevLong,danger[2]['lat'],danger[2]['long']);
-           	//console.log(diff);
+           	diff = distance(prevLat,prevLong,danger[2]['lat'],danger[2]['long']);
+          	console.log(diff);
 
 
             for (var i = 0; i < danger.length; i++) {
-            	diff = distance(prevLat,prevLong,danger[i]['lat'],danger[i]['long'],'km');
+            	diff = distance(prevLat,prevLong,danger[i]['lat'],danger[i]['long']);
             	if(diff<=40){
             		data.push({'name':danger[i]['name'], "distt":diff});
             	}
