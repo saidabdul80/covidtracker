@@ -1,8 +1,6 @@
 var danger =[
 //correct
-	{"lat": 9.616966, "long":6.533678, "name": "limawaA"},
-	{"lat": 9.016966, "long":6.533678, "name":"limawaB"},
-	{"lat": 9.086966, "long":8.573678, "name":"limawaC"}
+	{"lat": 9.616972, "long":6.533667, "name": "limawaA"},
 	]
 
 function distance(lat1, lon1, lat2, lon2, unit) {
