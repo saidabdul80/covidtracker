@@ -50,15 +50,19 @@ function distance(lat1, lon1, lat2, lon2, unit) {
             var prevLat = position.coords.latitude;
             var prevLong = position.coords.longitude;
             var data = [];
+            var data1 = [];
             var diff=0;
            	diff = distance(prevLat,prevLong,danger[2]['lat'],danger[2]['long']);
-          	console.log(diff);
+          	
 
 
             for (var i = 0; i < danger.length; i++) {
             	diff = distance(prevLat,prevLong,danger[i]['lat'],danger[i]['long']);
             	if(diff<=40){
             		data.push({'name':danger[i]['name'], "distt":diff});
+            	}else{
+            		data1.push({'name':danger[i]['name'], "distt":diff});
+
             	}
             }
             // Get current position
@@ -70,6 +74,10 @@ function distance(lat1, lon1, lat2, lon2, unit) {
             dd.innerHTML = "lat:" +prevLat +",long:"+ prevLong ;
              if(data.length<1){
              	x.innerHTML = "<div style='width:100px; height:100px; border-radius:50%;background:green;'></div><p>You are outside danger</p>";
+             	y.innerHTML ='';
+    			for (var i = 0; i < data1.length; i++){
+					y.innerHTML += "you are approximately <b>"+ Math.ceil(data1[i]['distt'])+ "m</b> meters away from "+ data1[i]['name']+"</br>";
+    			}
             }else{
     			x.innerHTML = "<div style='width:100px; height:100px; border-radius:50%;background:red;'></div>";
     			y.innerHTML ='';
