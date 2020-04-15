@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+  button{
+
+  }
+</style>
+<head>
+  <title>p5.js</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- <script type="text/javascript" src="p5.js"></script> -->
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="sketch.js"></script> 
+</head>
+<body>
+   <button type="button" id="toggleWatchBtn">Start Watching</button>
+  <center>
+    <h3>leave your data on you will get auto update where ever you go</h3>
+    <p id='demo'>loading...</p>
+    <p id="demo2"></p>
+    <p id="ddd"></p>
+
+  </center>
+  <script>
+    
+var placeID = ['ChIJOVmTWVVwTBARXXVmTpQvvbM','ChIJx3ED_OZwTBARBhfzmslZC9I','ChIJO_cveVZwTBARGqj_lpBEk2s'];
+
+for (var i = 0; i < placeID.length; i++) {
+  $.ajax({
+    url: "https://maps.googleapis.com/maps/api/distancematrix/json",
+      type: "GET",
+      data: {
+      place_id: placeID[i],
+      key: "AIzaSyCemwt2GZZ9QP_FQV2ckt9J2xvV0db60o4"
+  },
+  success: function(data) {
+    console.log(data);
+  }
+});
+}
+</script>
+</body>
+</html>
